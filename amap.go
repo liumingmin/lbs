@@ -32,7 +32,11 @@ func (t *AMap) GeoByAddresses(ctx context.Context, addresses []string, city stri
 
 	locations := make([]string, 0, len(result.Geocodes))
 	for _, geoCode := range result.Geocodes {
-		locations = append(locations, geoCode.Location)
+		if loc, ok := geoCode.Location.(string); ok {
+			locations = append(locations, loc)
+		} else {
+			locations = append(locations, "")
+		}
 	}
 	return locations
 }
@@ -79,5 +83,5 @@ type GeocodesResult struct {
 }
 
 type Geocode struct {
-	Location string `json:"location"` // 116.482086,39.990496
+	Location interface{} `json:"location"` // 116.482086,39.990496
 }
