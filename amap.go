@@ -79,7 +79,6 @@ type GeocodesResult struct {
 }
 
 type Geocode struct {
-	City             string `json:"city"`              // 北京市
-	FormattedAddress string `json:"formatted_address"` // 北京市朝阳区阜通东大街6号
-	Location         string `json:"location"`          // 116.482086,39.990496
+	City     string `json:"city"`     // 北京市
+	Location string `json:"location"` // 116.482086,39.990496
 }
