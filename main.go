@@ -11,7 +11,7 @@ var collection *mongo.CompCollectionOp
 
 func main() {
 	ctx := context.Background()
-	amap = &AMap{Key: "5e592d1df73f16e00eafca55880b2ee7"}
+	amap = &AMap{Key: ""}
 
 	mongo.InitClients()
 	c, _ := mongo.MgoClient("lbs")
