@@ -78,8 +78,8 @@ func locData(ctx context.Context, dataTable *container.DataTable, cityCol, addre
 		}
 
 		location := strings.TrimSpace(locations[addressIndex])
+		addressIndex++
 		if location == "" {
-			addressIndex++
 			continue
 		}
 
