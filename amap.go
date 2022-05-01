@@ -79,11 +79,7 @@ type GeocodesResult struct {
 }
 
 type Geocode struct {
-	Adcode           int64  `json:"adcode,string"`     // 110105
 	City             string `json:"city"`              // 北京市
-	Citycode         int64  `json:"citycode,string"`   // 010
-	Country          string `json:"country"`           // 中国
-	District         string `json:"district"`          // 朝阳区
 	FormattedAddress string `json:"formatted_address"` // 北京市朝阳区阜通东大街6号
 	Location         string `json:"location"`          // 116.482086,39.990496
 }
