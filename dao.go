@@ -52,6 +52,10 @@ func locData(ctx context.Context, dataTable *container.DataTable, cityCol, addre
 	addresses := make([]string, 0, len(cityRows))
 	for _, row := range cityRows {
 		address := strings.TrimSpace(row.String(addressCol))
+
+		if address == "" {
+			continue
+		}
 		addresses = append(addresses, address)
 	}
 
@@ -59,13 +63,30 @@ func locData(ctx context.Context, dataTable *container.DataTable, cityCol, addre
 	if len(locations) == 0 {
 		return
 	}
+
+	addressIndex := 0
 	a := pinyin.NewArgs()
 	a.Style = pinyin.FIRST_LETTER
-	for i, row := range cityRows {
+	for _, row := range cityRows {
+		address := strings.TrimSpace(row.String(addressCol))
+		if address == "" {
+			continue
+		}
+
+		if addressIndex >= len(locations) {
+			continue
+		}
+
+		location := strings.TrimSpace(locations[addressIndex])
+		if location == "" {
+			addressIndex++
+			continue
+		}
+
 		item := bson.M{}
 		item["dataId"] = row.String(dataTable.PkCol())
 		item["city"] = row.String(cityCol)
-		item["address"] = row.String(addressCol)
+		item["address"] = address
 
 		for _, expandCol := range expandCols {
 			expandColPy := pinyin.Pinyin(expandCol, a)
@@ -73,12 +94,9 @@ func locData(ctx context.Context, dataTable *container.DataTable, cityCol, addre
 		}
 
 		item["source"] = sliceToMap(row.Data(), dataTable.Cols())
-
-		if i < len(locations) {
-			item["geo"] = &LocationPoint{
-				Type:       "Point",
-				Cordinates: sliceAtof(strings.Split(locations[i], ",")),
-			}
+		item["geo"] = &LocationPoint{
+			Type:       "Point",
+			Cordinates: sliceAtof(strings.Split(location, ",")),
 		}
 
 		err := collection.Insert(ctx, item)
