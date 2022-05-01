@@ -68,9 +68,12 @@ func locData(ctx context.Context, dataTable *container.DataTable, cityCol, addre
 		}
 
 		item["source"] = sliceToMap(row.Data(), dataTable.Cols())
-		item["geo"] = &LocationPoint{
-			Type:       "Point",
-			Cordinates: sliceAtof(strings.Split(locations[i], ",")),
+
+		if i < len(locations) {
+			item["geo"] = &LocationPoint{
+				Type:       "Point",
+				Cordinates: sliceAtof(strings.Split(locations[i], ",")),
+			}
 		}
 
 		err := collection.Insert(ctx, item)
