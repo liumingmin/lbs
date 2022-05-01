@@ -24,6 +24,11 @@ func importData(ctx context.Context, dataTable *container.DataTable, cityCol, ad
 		city := row.String(cityCol)
 		city = strings.Split(city, "-")[0]
 
+		address := row.String(addressCol)
+		if strings.TrimSpace(address) == "" {
+			continue
+		}
+
 		if city == lastCity && len(cityRows) < 10 {
 			cityRows = append(cityRows, row)
 		} else {
@@ -46,7 +51,7 @@ func locData(ctx context.Context, dataTable *container.DataTable, cityCol, addre
 	cityRows []*container.DataRow, city string) {
 	addresses := make([]string, 0, len(cityRows))
 	for _, row := range cityRows {
-		address := row.String(addressCol)
+		address := strings.TrimSpace(row.String(addressCol))
 		addresses = append(addresses, address)
 	}
 
