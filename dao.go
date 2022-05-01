@@ -65,8 +65,7 @@ func locData(ctx context.Context, dataTable *container.DataTable, cityCol, addre
 	}
 
 	addressIndex := 0
-	a := pinyin.NewArgs()
-	a.Style = pinyin.FIRST_LETTER
+
 	for _, row := range cityRows {
 		address := strings.TrimSpace(row.String(addressCol))
 		if address == "" {
@@ -89,11 +88,11 @@ func locData(ctx context.Context, dataTable *container.DataTable, cityCol, addre
 		item["address"] = address
 
 		for _, expandCol := range expandCols {
-			expandColPy := pinyin.Pinyin(expandCol, a)
-			item[pinyinToString(expandColPy)] = row.String(expandCol)
+			item[pinyinToString(expandCol)] = row.String(expandCol)
 		}
 
 		item["source"] = sliceToMap(row.Data(), dataTable.Cols())
+
 		item["geo"] = &LocationPoint{
 			Type:       "Point",
 			Cordinates: sliceAtof(strings.Split(location, ",")),
@@ -106,7 +105,9 @@ func locData(ctx context.Context, dataTable *container.DataTable, cityCol, addre
 	}
 }
 
-func pinyinToString(s [][]string) string {
+func pinyinToString(expandCol string) string {
+	s := pinyin.Pinyin(expandCol, pinyinArgs)
+
 	result := ""
 	for _, c := range s {
 		for _, l := range c {
@@ -136,4 +137,11 @@ func sliceAtof(a []string) []float64 {
 type LocationPoint struct {
 	Type       string    `bson:"type"`
 	Cordinates []float64 `bson:"coordinates"`
+}
+
+var pinyinArgs pinyin.Args
+
+func init() {
+	pinyinArgs = pinyin.NewArgs()
+	pinyinArgs.Style = pinyin.FIRST_LETTER
 }

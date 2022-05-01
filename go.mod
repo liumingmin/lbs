@@ -3,7 +3,7 @@ module github.com/liumingmin/lbs
 go 1.17
 
 require (
-	github.com/liumingmin/goutils v1.0.17
+	github.com/liumingmin/goutils v1.0.18
 	github.com/xuri/excelize/v2 v2.6.0
 	go.mongodb.org/mongo-driver v1.8.3
 )
@@ -12,7 +12,6 @@ require (
 	github.com/demdxx/gocast v1.2.0 // indirect
 	github.com/go-stack/stack v1.8.0 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
-	github.com/google/uuid v1.3.0 // indirect
 	github.com/klauspost/compress v1.14.4 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/xdg-go/pbkdf2 v1.0.0 // indirect
