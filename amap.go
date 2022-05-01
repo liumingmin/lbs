@@ -79,6 +79,5 @@ type GeocodesResult struct {
 }
 
 type Geocode struct {
-	City     string `json:"city"`     // 北京市
 	Location string `json:"location"` // 116.482086,39.990496
 }
