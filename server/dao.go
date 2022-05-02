@@ -46,14 +46,14 @@ func QueryByLoc(ctx context.Context, reqVal interface{}) (interface{}, error) {
 
 	var locations []*GeoLocation
 	err := locationOp.Find(ctx, mongo.FindModel{
-		Query: bson.M{"$near": bson.M{
+		Query: bson.M{"geo": bson.M{"$near": bson.M{
 			"$geometry": bson.M{
 				"type":        "Point",
 				"coordinates": []float64{req.Long, req.Lat},
 			},
 			"$maxDistance": req.Min,
 			"$minDistance": req.Max,
-		}},
+		}}},
 		Cursor:  0,
 		Size:    req.Size,
 		Results: &locations,

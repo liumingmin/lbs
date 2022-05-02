@@ -11,6 +11,6 @@ func main() {
 	g := gin.Default()
 
 	defaultResp := &middleware.DefaultServiceResponse{}
-	g.POST("/query", middleware.ServiceHandler(QueryByLoc, GeoLocation{}, defaultResp))
+	g.POST("/query", middleware.ServiceHandler(QueryByLoc, LocationReq{}, defaultResp))
 	g.Run(":12800")
 }
