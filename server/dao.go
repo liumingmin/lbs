@@ -24,10 +24,16 @@ type LocationReq struct {
 }
 
 type GeoLocation struct {
-	Address string      `json:"address" bson:"address"`
-	City    string      `json:"city" bson:"city"`
-	DataId  string      `json:"dataId" bson:"dataId"`
-	Source  interface{} `json:"source" bson:"source"`
+	Address string         `json:"address" bson:"address"`
+	City    string         `json:"city" bson:"city"`
+	DataId  string         `json:"dataId" bson:"dataId"`
+	Source  interface{}    `json:"source" bson:"source"`
+	Geo     *LocationPoint `json:"geo" bson:"geo"`
+}
+
+type LocationPoint struct {
+	Type        string    `json:"type" bson:"type"`
+	Coordinates []float64 `json:"coordinates" bson:"coordinates"`
 }
 
 func QueryByLoc(ctx context.Context, reqVal interface{}) (interface{}, error) {

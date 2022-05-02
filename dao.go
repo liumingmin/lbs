@@ -94,8 +94,8 @@ func locData(ctx context.Context, dataTable *container.DataTable, cityCol, addre
 		item["source"] = sliceToMap(row.Data(), dataTable.Cols())
 
 		item["geo"] = &LocationPoint{
-			Type:       "Point",
-			Cordinates: sliceAtof(strings.Split(location, ",")),
+			Type:        "Point",
+			Coordinates: sliceAtof(strings.Split(location, ",")),
 		}
 
 		err := collection.Insert(ctx, item)
@@ -120,7 +120,7 @@ func pinyinToString(expandCol string) string {
 func sliceToMap(row []string, cols []string) map[string]string {
 	result := make(map[string]string)
 	for i := 0; i < len(row); i++ {
-		if i>= len(cols){
+		if i >= len(cols) {
 			break
 		}
 		result[cols[i]] = row[i]
@@ -138,8 +138,8 @@ func sliceAtof(a []string) []float64 {
 }
 
 type LocationPoint struct {
-	Type       string    `bson:"type"`
-	Cordinates []float64 `bson:"coordinates"`
+	Type        string    `bson:"type"`
+	Coordinates []float64 `bson:"coordinates"`
 }
 
 var pinyinArgs pinyin.Args
