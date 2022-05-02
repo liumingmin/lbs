@@ -8,19 +8,7 @@ import (
 	"github.com/xuri/excelize/v2"
 )
 
-func ReadExcel(ctx context.Context, filePath, sheetName string) *container.DataTable {
-	f, err := excelize.OpenFile(filePath)
-	if err != nil {
-		log.Error(ctx, "OpenFile excel err: %v", err)
-		return nil
-	}
-	defer func() {
-		// Close the spreadsheet.
-		if err := f.Close(); err != nil {
-			log.Error(ctx, "Close file excel err: %v", err)
-		}
-	}()
-
+func ReadExcel(ctx context.Context, f *excelize.File, sheetName string) *container.DataTable {
 	// Get all the rows in the Sheet1.
 	rows, err := f.GetRows(sheetName)
 	if err != nil || len(rows) == 0 {
