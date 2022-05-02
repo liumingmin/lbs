@@ -1,0 +1,17 @@
+log:
+  filename: "lbs.log"
+  logLevel: debug
+  stdout: true
+
+databases:
+  -
+    key: lbs
+    type: mongo
+    host: 127.0.0.1:27017
+    user:
+    password:
+    ext:
+      direct: true
+      maxPoolSize: 10
+      mode: "primary"
+      safe: {"w":1}
